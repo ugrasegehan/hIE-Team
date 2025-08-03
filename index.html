@@ -26,16 +26,29 @@
     .status-display {
       font-weight: bold;
     }
-    .add-option {
-      margin-top: 30px;
+    select, button, input {
+      padding: 5px;
+      font-size: 14px;
+    }
+    .legend-box {
+      margin-top: 40px;
       padding: 10px;
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    select, button, input {
-      padding: 5px;
-      font-size: 14px;
+    .legend-box ul {
+      list-style: none;
+      padding: 0;
+    }
+    .legend-box li {
+      margin-bottom: 5px;
+    }
+    .legend-box img {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 10px;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -44,10 +57,19 @@
 
   <div id="team"></div>
 
-  <div class="add-option">
-    <h3>Yeni Durum Seçeneği Ekle</h3>
-    <input type="text" id="newStatus" placeholder="Yeni durum (kısa kod)">
-    <button onclick="addStatusOption()">Ekle</button>
+  <div class="legend-box">
+    <h3>Durum Açıklamaları</h3>
+    <ul>
+      <li><strong>MS:</strong> Meslek Semineri</li>
+      <li><strong>Y:</strong> Yemekhane</li>
+      <li><strong>2:</strong> 2929 </li>
+      <li><strong>T:</strong> Tur</li>
+      <li><strong>YV:</strong> Yurt Vardiyası</li>
+      <li><strong>L:</strong> Lounge</li>
+      <li><strong>D:</strong> Desk</li>
+      <li><strong>OUT OF ORDER:</strong> Ben ofisi bıraktım aramayın sormayın</li>
+    </ul>
+    <img src="legend.png" alt="Durum Açıklamaları">
   </div>
 
   <script type="module" src="main_v1.js"></script>
