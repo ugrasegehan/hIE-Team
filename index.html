@@ -38,25 +38,34 @@
       font-size: 14px;
     }
   </style>
-</head>
-<body>
-  <h1>⚡ Takım Durum Takibi</h1>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-  <div id="team"></div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCf0uFz0Ow5AJCTTREiFWEleAigIWpLqOI",
+      authDomain: "takimdurum.firebaseapp.com",
+      projectId: "takimdurum",
+      storageBucket: "takimdurum.firebasestorage.app",
+      messagingSenderId: "24060496942",
+      appId: "1:24060496942:web:c5cdee004b18571a48a3bf",
+      measurementId: "G-F9P7C1XM6H"
+    };
 
-  <div class="add-option">
-    <h3>Yeni Durum Seçeneği Ekle</h3>
-    <input type="text" id="newStatus" placeholder="Yeni durum (kısa kod)">
-    <button onclick="addStatusOption()">Ekle</button>
-  </div>
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-  <script>
     const teamMembers = ["Egehan", "Doğa", "Mina", "Nehir", "Atahan", "Defne", "Berat"];
     let statusOptions = ["MS", "Y", "2", "T", "YV", "D", "T"];
 
     const teamDiv = document.getElementById("team");
 
-    function renderTeam() {
+    function updateStatus(name, value) {
+      set(ref(db, 'teamStatus/' + name), value);
+    }
+
+    function renderTeam(statuses = {}) {
       teamDiv.innerHTML = "";
       teamMembers.forEach(name => {
         const wrapper = document.createElement("div");
@@ -75,10 +84,14 @@
 
         const statusDisplay = document.createElement("div");
         statusDisplay.className = "status-display";
-        statusDisplay.textContent = "-";
+        statusDisplay.textContent = statuses[name] || "-";
+
+        if (statuses[name]) {
+          select.value = statuses[name];
+        }
 
         select.addEventListener("change", () => {
-          statusDisplay.textContent = select.value;
+          updateStatus(name, select.value);
         });
 
         wrapper.appendChild(nameDiv);
@@ -99,7 +112,23 @@
       }
     }
 
-    renderTeam();
+    import { onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    const statusRef = ref(db, 'teamStatus');
+    onValue(statusRef, (snapshot) => {
+      const data = snapshot.val() || {};
+      renderTeam(data);
+    });
   </script>
+</head>
+<body>
+  <h1>⚡ Takım Durum Takibi</h1>
+
+  <div id="team"></div>
+
+  <div class="add-option">
+    <h3>Yeni Durum Seçeneği Ekle</h3>
+    <input type="text" id="newStatus" placeholder="Yeni durum (kısa kod)">
+    <button onclick="addStatusOption()">Ekle</button>
+  </div>
 </body>
 </html>
