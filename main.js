@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const teamMembers = ["Egehan", "Doğa", "Mina", "Nehir", "Atahan", "Defne", "Berat"];
-let statusOptions = ["MS", "Y", "2", "T", "YV", "D", "T"];
+let statusOptions = ["MS", "Y", "2", "T", "YV", "D", "WC", "L","OUT OF ORDER"];
 
 const teamDiv = document.getElementById("team");
 
