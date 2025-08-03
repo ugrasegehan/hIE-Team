@@ -10,9 +10,19 @@
       padding: 20px;
       background-color: #f0f0f0;
     }
+
     h1 {
       text-align: center;
     }
+
+    #message {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0 30px 0;
+      color: #444;
+    }
+
     .person {
       display: flex;
       align-items: center;
@@ -23,13 +33,16 @@
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
     .status-display {
       font-weight: bold;
     }
+
     select, button, input {
       padding: 5px;
       font-size: 14px;
     }
+
     .legend-box {
       margin-top: 40px;
       padding: 10px;
@@ -37,13 +50,16 @@
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
     .legend-box ul {
       list-style: none;
       padding: 0;
     }
+
     .legend-box li {
       margin-bottom: 5px;
     }
+
     .legend-box img {
       width: 100%;
       max-width: 500px;
@@ -53,25 +69,34 @@
   </style>
 </head>
 <body>
+
   <h1>⚡ Takım Durum Takibi</h1>
 
+  <!-- Afiyet olsun mesajı için eklendi -->
+  <div id="message"></div>
+
+  <!-- Takım listesi buraya çizilecek -->
   <div id="team"></div>
 
+  <!-- Açıklama kutusu -->
   <div class="legend-box">
     <h3>Durum Açıklamaları</h3>
     <ul>
       <li><strong>MS:</strong> Meslek Semineri</li>
       <li><strong>Y:</strong> Yemekhane</li>
-      <li><strong>2:</strong> 2929 </li>
+      <li><strong>2:</strong> 2929</li>
       <li><strong>T:</strong> Tur</li>
       <li><strong>YV:</strong> Yurt Vardiyası</li>
       <li><strong>L:</strong> Lounge</li>
       <li><strong>D:</strong> Desk</li>
-      <li><strong>OUT OF ORDER:</strong> Ben ofisi bıraktım aramayın sormayın</li>
+      <li><strong>WC:</strong> WC molası</li>
+      <li><strong>OUT OF ORDER:</strong> Ben ofisi bıraktım, aramayın sormayın</li>
     </ul>
     <img src="legend.jpeg" alt="Durum Açıklamaları">
   </div>
 
+  <!-- Firebase bağlantısı ve takım render kodu -->
   <script type="module" src="main_v1.js"></script>
+
 </body>
 </html>
