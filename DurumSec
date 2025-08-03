@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takım Durum Takibi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      text-align: center;
+    }
+    .person {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .status-display {
+      font-weight: bold;
+    }
+    .add-option {
+      margin-top: 30px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    select, button, input {
+      padding: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚡ Takım Durum Takibi</h1>
+
+  <div id="team"></div>
+
+  <div class="add-option">
+    <h3>Yeni Durum Seçeneği Ekle</h3>
+    <input type="text" id="newStatus" placeholder="Yeni durum (kısa kod)">
+    <button onclick="addStatusOption()">Ekle</button>
+  </div>
+
+  <script>
+    const teamMembers = ["Egehan", "Doğa", "Mina", "Nehir", "Atahan", "Defne", "Berat"];
+    let statusOptions = ["MS", "Y", "2", "T", "YV", "D","T"];
+
+    const teamDiv = document.getElementById("team");
+
+    function renderTeam() {
+      teamDiv.innerHTML = "";
+      teamMembers.forEach(name => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "person";
+
+        const nameDiv = document.createElement("div");
+        nameDiv.textContent = name;
+
+        const select = document.createElement("select");
+        statusOptions.forEach(opt => {
+          const option = document.createElement("option");
+          option.value = opt;
+          option.textContent = opt;
+          select.appendChild(option);
+        });
+
+        const statusDisplay = document.createElement("div");
+        statusDisplay.className = "status-display";
+        statusDisplay.textContent = "-";
+
+        select.addEventListener("change", () => {
+          statusDisplay.textContent = select.value;
+        });
+
+        wrapper.appendChild(nameDiv);
+        wrapper.appendChild(select);
+        wrapper.appendChild(statusDisplay);
+
+        teamDiv.appendChild(wrapper);
+      });
+    }
+
+    function addStatusOption() {
+      const input = document.getElementById("newStatus");
+      const newStatus = input.value.trim();
+      if (newStatus && !statusOptions.includes(newStatus)) {
+        statusOptions.push(newStatus);
+        renderTeam();
+        input.value = "";
+      }
+    }
+
+    renderTeam();
+  </script>
+</body>
+</html>
