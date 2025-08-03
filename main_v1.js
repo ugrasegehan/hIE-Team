@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
@@ -16,9 +15,10 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const teamMembers = ["Egehan", "Doğa", "Mina", "Nehir", "Atahan", "Defne", "Berat"];
-let statusOptions = ["MS", "Y", "2", "T", "YV", "D", "WC", "L","OUT OF ORDER"];
+let statusOptions = ["MS", "Y", "2", "T", "YV", "D", "WC", "L", "OUT OF ORDER"];
 
 const teamDiv = document.getElementById("team");
+const messageDiv = document.getElementById("message");
 
 function updateStatus(name, value) {
   set(ref(db, 'teamStatus/' + name), value);
@@ -26,6 +26,8 @@ function updateStatus(name, value) {
 
 function renderTeam(statuses = {}) {
   teamDiv.innerHTML = "";
+  let showMessage = false;
+
   teamMembers.forEach(name => {
     const wrapper = document.createElement("div");
     wrapper.className = "person";
@@ -43,11 +45,11 @@ function renderTeam(statuses = {}) {
 
     const statusDisplay = document.createElement("div");
     statusDisplay.className = "status-display";
-    statusDisplay.textContent = statuses[name] || "-";
+    const currentStatus = statuses[name] || "-";
+    statusDisplay.textContent = currentStatus;
 
-    if (statuses[name]) {
-      select.value = statuses[name];
-    }
+    if (currentStatus === "Y") showMessage = true;
+    if (statuses[name]) select.value = statuses[name];
 
     select.addEventListener("change", () => {
       updateStatus(name, select.value);
@@ -59,17 +61,9 @@ function renderTeam(statuses = {}) {
 
     teamDiv.appendChild(wrapper);
   });
-}
 
-window.addStatusOption = function () {
-  const input = document.getElementById("newStatus");
-  const newStatus = input.value.trim();
-  if (newStatus && !statusOptions.includes(newStatus)) {
-    statusOptions.push(newStatus);
-    renderTeam();
-    input.value = "";
-  }
-};
+  messageDiv.textContent = showMessage ? "🥣 Afiyet olsun, yemekhane tayfası!" : "";
+}
 
 const statusRef = ref(db, 'teamStatus');
 onValue(statusRef, (snapshot) => {
